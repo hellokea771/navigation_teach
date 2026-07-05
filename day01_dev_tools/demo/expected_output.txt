@@ -1,0 +1,4 @@
+机器人名称: navigation_bot
+开发环境: Ubuntu 22.04
+课程: Day 01 - Development Tools
+状态: ready

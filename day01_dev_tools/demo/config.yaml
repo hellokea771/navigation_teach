@@ -1,0 +1,6 @@
+# Day 01 演示配置
+robot_name: navigation_bot
+environment: Ubuntu 22.04
+course: Day 01 - Development Tools
+status: ready
+
