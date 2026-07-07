@@ -1,9 +1,68 @@
-__pycache__/
-*.py[cod]
-*.log
+# Local editor and agent state
 .vscode/
 .idea/
+.history/
+.agents/
+.codex/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
 .venv/
 venv/
-day01_dev_tools/workspace/
+env/
+
+# Python cache and tooling
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+*.egg-info/
+
+# Logs and caches
+*.log
+.cache/
+
+# C/C++ and CMake build artifacts
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+
+# ROS / colcon generated directories
+install/
+log/
+
+# ROS bags and large sensor data
+*_bag_*/
+rosbag2_*/
+*.bag
+*.bag.active
+*.db3
+*.mcap
+*.pcd
+*.ply
+*.las
+*.laz
 
