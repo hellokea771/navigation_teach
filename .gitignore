@@ -61,7 +61,6 @@ rosbag2_*/
 *.bag.active
 *.db3
 *.mcap
-*.pcd
 *.ply
 *.las
 *.laz
