@@ -4,7 +4,7 @@
 **现在，让我们尝试创建一个自己的ROS功能包，并编写自己的第一个节点**  
 
 ## 创建功能包  
-在02node文件夹下打开终端，输入
+在day02_node文件夹下打开终端，输入
 ```
 cd ./src
 ros2 pkg create my_first_package --build-type ament_cmake --dependencies rclcpp
@@ -13,7 +13,7 @@ ros2 pkg create my_first_package --build-type ament_cmake --dependencies rclcpp
 `--dependencies rclcpp` 表示依赖 ROS2 的 C++ 客户端库
 运行后，系统会生成一个标准的包结构:
 ```
-02node
+day02_node
 └── my_first_package
     ├── CMakeLists.txt
     ├── include
