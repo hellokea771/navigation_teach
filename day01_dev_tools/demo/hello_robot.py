@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 # 课程故意保留的问题：这里的配置文件路径不正确。
-CONFIG_PATH = Path("config/robot.yaml")
+CONFIG_PATH = Path(__file__).parent / "config.yaml"
 
 
 def load_simple_config(path: Path) -> dict[str, str]:
