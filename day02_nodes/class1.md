@@ -1,9 +1,89 @@
 # 节点与节点编写
 ---
-在前面的介绍中我们已经大致了解了工作空间、包和节点的概念。如你所见，整个教程都处在一个叫做“navigation_teach”的工作空间之下。   
-**现在，让我们尝试创建一个自己的ROS功能包，并编写自己的第一个节点**  
+## ROS2 重要概念与常用命令
+
+在正式写节点前，先把 ROS2 开发中最常接触的几个概念理清楚。
+
+**工作空间（Workspace）**  
+工作空间是一组 ROS2 功能包的集合，通常包含 `src`、`build`、`install`、`log` 等目录。我们平时写代码主要放在 `src` 中，编译后结果会进入 `install`。
+
+
+**功能包（Package）**  
+功能包是 ROS2 代码组织的基本单位。一个功能包里通常包含源码、配置文件、launch 文件、消息定义等。
+
+创建 C++ 功能包：
+```
+cd ~/my_ws/src
+ros2 pkg create my_pkg --build-type ament_cmake --dependencies rclcpp
+```
+
+编译指定功能包：
+```
+cd ~/my_ws
+colcon build --packages-select my_pkg
+source install/setup.bash
+```
+
+**节点（Node）**  
+节点是 ROS 中的最小执行单元（常常对应一个可执行程序或进程），负责完成一项具体任务（例如：相机驱动、目标识别、底盘控制、串口读写）。暂且可以认为一个节点负责完成一项任务。例如“相机驱动节点”、“串口通信节点”、“导航节点”。
+节点由包（package）里的可执行文件启动。
+
+查看所有的ROS2节点：
+```
+ros2 node list 
+```
+常用命令：
+```
+ros2 node list
+ros2 node info /node_name //查看某个节点的具体信息
+ros2 run package_name executable_name  //运行某个节点
+```
+
+**Topic 通信**  
+Topic 是发布/订阅通信，适合连续数据流，例如雷达点云、IMU、里程计、控制指令。
+
+常用命令：
+```
+ros2 topic list
+ros2 topic echo /topic_name
+ros2 topic info /topic_name
+ros2 topic hz /topic_name
+ros2 interface show std_msgs/msg/String
+```
+实际过程中，大部分节点之间的通信都可以使用topic,因为大部分的任务都是连续的，且一个节点的信息，可能会有很多其他不同的节点来使用。
+**Service 通信**  
+Service 是请求/响应通信，你发出一个需求，它就给你相应一次，例如保存地图、切换模式、请求一次计算。
+
+常用命令：
+```
+ros2 service list
+ros2 service type /service_name
+ros2 service call /service_name service_type "{}"
+```
+
+**Action 通信**  
+Action 适合持续一段时间、并且需要反馈和取消的任务，例如导航到目标点、执行机械臂动作。
+
+常用命令：
+```
+ros2 action list
+ros2 action info /action_name
+ros2 action send_goal /action_name action_type "{}"
+```
+
+**参数（Parameter）**  
+参数用于配置节点运行行为，例如发布频率、话题名称、机器人半径、是否使用仿真时间。
+
+常用命令：
+```
+ros2 param list
+ros2 param get /node_name param_name
+ros2 param set /node_name param_name value
+```
+
 
 ## 创建功能包  
+接下来进入到实际操作环节：
 在day02_node文件夹下打开终端，输入
 ```
 cd ./src
