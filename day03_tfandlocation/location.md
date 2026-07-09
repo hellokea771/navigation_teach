@@ -449,6 +449,9 @@ ros2 run tf2_ros tf2_echo odom base_link
 使用老师提供的 Point-LIO 算法和 rosbag(ros2 bag play livox_bag_20260523_183327/livox_bag_20260523_183327_0.mcap
 )，完成一次定位实验。
 
+
+**ps：**
+在使用Point-LIO算法之前，请自行在github上搜索livox_ros_driver，下载并编译，把source加到bashrc里，才能正确使用rosbag里的点云信息。
 要求提交：
 
 1. RViz 截图，截图中需要显示：
