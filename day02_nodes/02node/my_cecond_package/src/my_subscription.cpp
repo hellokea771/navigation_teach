@@ -1,24 +1,21 @@
+#include <my_msgs/msg/sentry.hpp>
 #include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/string.hpp"
-#include<my_msgs/msg/sentry.hpp>
 
-class MyPublisher:public rclcpp::Node
+class MyPublisher : public rclcpp::Node
 {
 public:
-    MyPublisher():Node("my_publisher"),
-       count_(0)
-    {
-        publisher_ = this->create_publisher<my_msgs::msg::Sentry>("my_sentry",10);
-        timer_ = this->create_wall_timer(
-            std::chrono::seconds(1),
-            std::bind(&MyPublisher::timer_callback,this)
-        );
-    } 
-private:
-    void timer_callback()
-    {
-    auto message = my_msgs::msg::Sentry();
+  MyPublisher() : Node("my_publisher"), count_(0)
+  {
+    publisher_ = this->create_publisher<my_msgs::msg::Sentry>("my_sentry", 10);
+    timer_ = this->create_wall_timer(
+        std::chrono::seconds(1),
+        std::bind(&MyPublisher::timer_callback, this));
+  }
 
+private:
+  void timer_callback()
+  {
+    auto message = my_msgs::msg::Sentry();
     message.id = count_;
     message.hp = 100;
     message.x = 1.5f * count_;
@@ -33,49 +30,51 @@ private:
         message.y);
 
     publisher_->publish(message);
-
     count_++;
-}
-        
-    rclcpp::Publisher<my_msgs::msg::Sentry>::SharedPtr publisher_;
-    rclcpp::TimerBase::SharedPtr timer_;
-    size_t count_;
+  }
+
+  rclcpp::Publisher<my_msgs::msg::Sentry>::SharedPtr publisher_;
+  rclcpp::TimerBase::SharedPtr timer_;
+  size_t count_;
 };
-class MySubscriber:public rclcpp::Node
+
+class MySubscriber : public rclcpp::Node
 {
 public:
-    MySubscriber():Node("my_subscriber")
-    {
-        subscription_ = this->create_subscription<my_msgs::msg::Sentry>(
-            "my_sentry",
-            10,
-            std::bind(&MySubscriber::topic_callback,this,std::placeholders::_1)
-        );
-    }
+  MySubscriber() : Node("my_subscriber")
+  {
+    subscription_ = this->create_subscription<my_msgs::msg::Sentry>(
+        "my_sentry",
+        10,
+        std::bind(&MySubscriber::topic_callback, this, std::placeholders::_1));
+  }
+
 private:
-    void topic_callback(const my_msgs::msg::Sentry::SharedPtr msg) const
-    {
-        RCLCPP_INFO(
-            this->get_logger(),
-            "I heard: id=%d hp=%d x=%.2f y=%.2f",
-            msg->id,
-            msg->hp,
-            msg->x,
-            msg->y);
-    }
-    rclcpp::Subscription<my_msgs::msg::Sentry>::SharedPtr subscription_;
+  void topic_callback(const my_msgs::msg::Sentry::SharedPtr msg) const
+  {
+    RCLCPP_INFO(
+        this->get_logger(),
+        "I heard: id=%d hp=%d x=%.2f y=%.2f",
+        msg->id,
+        msg->hp,
+        msg->x,
+        msg->y);
+  }
+
+  rclcpp::Subscription<my_msgs::msg::Sentry>::SharedPtr subscription_;
 };
-int main(int argc,char *argv[])
+
+int main(int argc, char *argv[])
 {
-    rclcpp::init(argc,argv);
-    auto publisher = std::make_shared<MyPublisher>();
-    auto subscriber = std::make_shared<MySubscriber>();
+  rclcpp::init(argc, argv);
+  auto publisher = std::make_shared<MyPublisher>();
+  auto subscriber = std::make_shared<MySubscriber>();
 
-    rclcpp::executors::SingleThreadedExecutor executor;
-    executor.add_node(publisher);
-    executor.add_node(subscriber);
-    executor.spin();
+  rclcpp::executors::SingleThreadedExecutor executor;
+  executor.add_node(publisher);
+  executor.add_node(subscriber);
+  executor.spin();
 
-    rclcpp::shutdown();
-    return 0;
+  rclcpp::shutdown();
+  return 0;
 }

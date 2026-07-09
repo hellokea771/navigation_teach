@@ -8,7 +8,7 @@ def generate_launch_description():
     # 接收节点
     subscriber = Node(
         package="my_third_package",
-        executable="only_sub",
+        executable="my_third_node",
         name="my_subscriber",
         output="screen"
     )

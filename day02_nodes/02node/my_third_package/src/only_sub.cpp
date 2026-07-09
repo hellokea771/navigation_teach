@@ -1,5 +1,4 @@
 #include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/string.hpp"
 #include<my_msgs/msg/sentry.hpp>
 
 class MySubscriber:public rclcpp::Node
