@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="430" viewBox="0 0 900 430">
+  <style>
+    .axis{stroke:#333;stroke-width:2}
+    .grid{stroke:#e6e6e6;stroke-width:1}
+    .text{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:16px;fill:#111}
+    .small{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:14px;fill:#333}
+    .title{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:23px;font-weight:bold;fill:#111}
+    .input{stroke:#111;stroke-width:3;fill:none;stroke-dasharray:8 6}
+    .output{stroke:#d32f2f;stroke-width:4;fill:none}
+    .over{stroke:#d32f2f;stroke-width:2;fill:none;stroke-dasharray:5 5}
+  </style>
+
+  <text x="45" y="38" class="title">二阶系统速度响应示意</text>
+  <text x="45" y="68" class="small">目标速度突然从 0 变成 1.0 m/s，实际速度可能先冲过目标，再振荡并逐渐收敛。</text>
+
+  <line x1="80" y1="350" x2="830" y2="350" class="axis"/>
+  <line x1="80" y1="90" x2="80" y2="350" class="axis"/>
+  <text x="825" y="382" class="text">时间 t</text>
+  <text x="22" y="105" class="text">速度 v</text>
+
+  <line x1="80" y1="270" x2="830" y2="270" class="grid"/>
+  <line x1="80" y1="190" x2="830" y2="190" class="grid"/>
+  <line x1="80" y1="110" x2="830" y2="110" class="grid"/>
+
+  <text x="52" y="355" class="small">0</text>
+  <text x="40" y="195" class="small">1.0</text>
+  <text x="40" y="115" class="small">超调</text>
+
+  <path d="M80,350 L160,350 L160,190 L830,190" class="input"/>
+  <text x="620" y="175" class="small">输入：目标速度</text>
+
+  <path d="M160,350
+           C205,300 245,225 305,130
+           C360,72 430,110 485,170
+           C540,228 600,220 655,196
+           C710,172 765,184 830,190" class="output"/>
+  <text x="455" y="115" class="text" fill="#d32f2f">输出：超调、振荡、最后收敛</text>
+
+  <line x1="80" y1="130" x2="830" y2="130" class="over"/>
+  <text x="325" y="105" class="small" fill="#d32f2f">实际速度超过目标速度的部分叫超调</text>
+
+  <rect x="80" y="385" width="22" height="4" fill="#111"/>
+  <text x="112" y="393" class="small">目标速度</text>
+  <rect x="210" y="385" width="22" height="4" fill="#d32f2f"/>
+  <text x="242" y="393" class="small">实际速度</text>
+</svg>

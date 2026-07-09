@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="430" viewBox="0 0 980 430">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#333"/>
+    </marker>
+    <style>
+      .box{fill:#f6f8fa;stroke:#333;stroke-width:2;rx:10;ry:10}
+      .title{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:24px;font-weight:bold;fill:#111}
+      .text{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:18px;fill:#111}
+      .small{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:15px;fill:#333}
+      .line{stroke:#333;stroke-width:2.5;fill:none;marker-end:url(#arrow)}
+      .feedback{stroke:#1976d2;stroke-width:2.5;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+
+  <text x="60" y="42" class="title">开环控制：只发命令，不看反馈</text>
+  <rect x="70" y="90" width="150" height="70" class="box"/>
+  <text x="102" y="132" class="text">目标速度</text>
+  <rect x="310" y="90" width="150" height="70" class="box"/>
+  <text x="350" y="132" class="text">控制器</text>
+  <rect x="550" y="90" width="150" height="70" class="box"/>
+  <text x="585" y="132" class="text">机器人</text>
+  <rect x="790" y="90" width="130" height="70" class="box"/>
+  <text x="817" y="132" class="text">实际速度</text>
+  <path d="M220,125 L310,125" class="line"/>
+  <path d="M460,125 L550,125" class="line"/>
+  <path d="M700,125 L790,125" class="line"/>
+  <text x="63" y="195" class="small">例：发 1.0 m/s，就假设机器人真的跑到 1.0 m/s。</text>
+
+  <text x="60" y="265" class="title">闭环控制：看反馈，根据误差不断修正</text>
+  <rect x="70" y="310" width="150" height="70" class="box"/>
+  <text x="102" y="352" class="text">目标速度</text>
+  <circle cx="270" cy="345" r="24" fill="#fff" stroke="#333" stroke-width="2"/>
+  <text x="262" y="352" class="text">Σ</text>
+  <text x="241" y="332" class="small">+</text>
+  <text x="269" y="376" class="small">-</text>
+  <rect x="350" y="310" width="150" height="70" class="box"/>
+  <text x="390" y="352" class="text">控制器</text>
+  <rect x="590" y="310" width="150" height="70" class="box"/>
+  <text x="625" y="352" class="text">机器人</text>
+  <rect x="820" y="310" width="110" height="70" class="box"/>
+  <text x="841" y="352" class="text">输出</text>
+  <path d="M220,345 L246,345" class="line"/>
+  <path d="M294,345 L350,345" class="line"/>
+  <path d="M500,345 L590,345" class="line"/>
+  <path d="M740,345 L820,345" class="line"/>
+  <path d="M875,380 L875,410 L270,410 L270,370" class="feedback"/>
+  <text x="395" y="405" class="small" fill="#1976d2">反馈：实际速度 / 实际位置</text>
+</svg>

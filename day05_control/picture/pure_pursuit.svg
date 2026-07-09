@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="520" viewBox="0 0 980 520">
+  <defs>
+    <marker id="arrow3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#333"/>
+    </marker>
+  </defs>
+  <style>
+    .title{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:24px;font-weight:bold;fill:#111}
+    .text{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:17px;fill:#111}
+    .small{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:14px;fill:#333}
+    .path{stroke:#1976d2;stroke-width:5;fill:none}
+    .robot{fill:#fff;stroke:#333;stroke-width:3}
+    .look{stroke:#4caf50;stroke-width:3;fill:none;stroke-dasharray:8 6}
+    .line{stroke:#333;stroke-width:3;fill:none;marker-end:url(#arrow3)}
+  </style>
+  <text x="45" y="42" class="title">Pure Pursuit：追踪前方目标点</text>
+  <text x="45" y="72" class="small">机器人不直接追最近点，而是在路径前方找一个 lookahead 目标点。</text>
+
+  <path d="M90,400 C210,330 300,315 410,315 C560,315 635,220 760,195 C830,180 890,205 930,250" class="path"/>
+
+  <circle cx="330" cy="390" r="32" class="robot"/>
+  <path d="M330,390 L405,365" class="line"/>
+  <text x="280" y="450" class="text">机器人</text>
+
+  <circle cx="360" cy="315" r="8" fill="#1976d2"/>
+  <text x="295" y="300" class="small">最近路径点</text>
+
+  <circle cx="505" cy="292" r="13" fill="#4caf50" stroke="#1b5e20" stroke-width="2"/>
+  <text x="520" y="286" class="text" fill="#2e7d32">目标点</text>
+
+  <circle cx="330" cy="390" r="170" class="look"/>
+  <text x="430" y="438" class="text" fill="#2e7d32">lookahead distance</text>
+
+  <path d="M330,390 L505,292" stroke="#4caf50" stroke-width="3" marker-end="url(#arrow3)"/>
+  <text x="520" y="385" class="small">控制器让机器人朝目标点转向</text>
+
+  <text x="70" y="95" class="text">lookahead 小：跟得紧，但容易抖动。</text>
+  <text x="70" y="122" class="text">lookahead 大：更平滑，但转弯可能切弯。</text>
+</svg>

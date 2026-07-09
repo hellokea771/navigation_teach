@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="520" viewBox="0 0 980 520">
+  <style>
+    .axis{stroke:#333;stroke-width:2}
+    .grid{stroke:#e0e0e0;stroke-width:1}
+    .text{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:17px;fill:#111}
+    .small{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:14px;fill:#333}
+    .title{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:24px;font-weight:bold;fill:#111}
+    .input{stroke:#111;stroke-width:3;fill:none;stroke-dasharray:8 6}
+    .first{stroke:#1976d2;stroke-width:4;fill:none}
+    .second{stroke:#d32f2f;stroke-width:4;fill:none}
+    .tau{stroke:#1976d2;stroke-width:2;fill:none;stroke-dasharray:5 5}
+  </style>
+
+  <text x="50" y="40" class="title">一阶模型与二阶模型的阶跃响应对比</text>
+  <text x="50" y="70" class="small">示意图：输入速度突然从 0 变成 1.0，观察实际输出速度如何跟上。</text>
+
+  <line x1="90" y1="430" x2="910" y2="430" class="axis"/>
+  <line x1="90" y1="90" x2="90" y2="430" class="axis"/>
+  <text x="910" y="462" class="text">时间 t</text>
+  <text x="18" y="105" class="text">速度 v</text>
+
+  <line x1="90" y1="350" x2="910" y2="350" class="grid"/>
+  <line x1="90" y1="270" x2="910" y2="270" class="grid"/>
+  <line x1="90" y1="190" x2="910" y2="190" class="grid"/>
+  <line x1="90" y1="110" x2="910" y2="110" class="grid"/>
+
+  <text x="58" y="435" class="small">0</text>
+  <text x="50" y="195" class="small">1.0</text>
+  <text x="40" y="279" class="small">0.632</text>
+
+  <path d="M90,430 L170,430 L170,190 L910,190" class="input"/>
+  <text x="735" y="175" class="small">输入：目标速度阶跃</text>
+
+  <path d="M170,430
+           C220,365 260,320 310,288
+           C375,246 455,220 540,205
+           C650,191 770,190 910,190" class="first"/>
+  <text x="650" y="235" class="text" fill="#1976d2">一阶输出：平滑接近目标，不超调</text>
+
+  <path d="M170,430
+           C210,360 250,260 320,160
+           C385,80 470,112 535,170
+           C610,238 700,218 765,194
+           C825,175 870,183 910,190" class="second"/>
+  <text x="535" y="115" class="text" fill="#d32f2f">二阶输出：可能超调、振荡后收敛</text>
+
+  <line x1="285" y1="430" x2="285" y2="270" class="tau"/>
+  <line x1="90" y1="270" x2="285" y2="270" class="tau"/>
+  <text x="295" y="300" class="small" fill="#1976d2">一阶系统约在 t=τ 达到 63.2%</text>
+
+  <rect x="92" y="460" width="22" height="4" fill="#111"/>
+  <text x="125" y="468" class="small">输入</text>
+  <rect x="205" y="460" width="22" height="4" fill="#1976d2"/>
+  <text x="238" y="468" class="small">一阶模型</text>
+  <rect x="350" y="460" width="22" height="4" fill="#d32f2f"/>
+  <text x="383" y="468" class="small">二阶模型</text>
+</svg>

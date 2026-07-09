@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="430" viewBox="0 0 980 430">
+  <style>
+    .box{fill:#f6f8fa;stroke:#333;stroke-width:2;rx:12;ry:12}
+    .title{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:24px;font-weight:bold;fill:#111}
+    .text{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:18px;fill:#111}
+    .small{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:15px;fill:#333}
+    .p{fill:#e3f2fd;stroke:#1976d2}
+    .i{fill:#fff8e1;stroke:#f9a825}
+    .d{fill:#fce4ec;stroke:#c2185b}
+  </style>
+  <text x="45" y="42" class="title">PID 的直觉理解</text>
+  <text x="45" y="72" class="small">PID 不是魔法，本质是在根据“误差”决定该怎么修正。</text>
+
+  <rect x="60" y="110" width="260" height="220" class="box p"/>
+  <text x="95" y="155" class="title" fill="#1976d2">P：看现在</text>
+  <text x="85" y="205" class="text">当前误差越大</text>
+  <text x="85" y="235" class="text">修正越大</text>
+  <text x="85" y="285" class="small">例：车头偏右很多，就给更大的左转角速度。</text>
+
+  <rect x="360" y="110" width="260" height="220" class="box i"/>
+  <text x="395" y="155" class="title" fill="#f9a825">I：看过去</text>
+  <text x="385" y="205" class="text">长期有残留误差</text>
+  <text x="385" y="235" class="text">就慢慢补回来</text>
+  <text x="385" y="285" class="small">风险：累积太多会导致过冲，叫积分饱和。</text>
+
+  <rect x="660" y="110" width="260" height="220" class="box d"/>
+  <text x="695" y="155" class="title" fill="#c2185b">D：看趋势</text>
+  <text x="685" y="205" class="text">误差变化太快</text>
+  <text x="685" y="235" class="text">提前刹一下</text>
+  <text x="685" y="285" class="small">风险：对噪声敏感，传感器抖动会被放大。</text>
+
+  <text x="75" y="380" class="text">常见调参直觉：先让 P 能动起来，再少量加入 I/D；太激进会振荡，太保守会反应慢。</text>
+</svg>

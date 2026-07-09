@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="520" viewBox="0 0 980 520">
+  <style>
+    .title{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:24px;font-weight:bold;fill:#111}
+    .text{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:17px;fill:#111}
+    .small{font-family:Arial,"Noto Sans CJK SC",sans-serif;font-size:14px;fill:#333}
+    .path{stroke:#1976d2;stroke-width:5;fill:none}
+    .pred{stroke:#d32f2f;stroke-width:4;fill:none;stroke-dasharray:8 5}
+    .exec{stroke:#4caf50;stroke-width:5;fill:none}
+    .point{fill:#fff;stroke:#d32f2f;stroke-width:2}
+  </style>
+  <text x="45" y="42" class="title">MPC / NMPC：预测未来，只执行第一步</text>
+  <text x="45" y="72" class="small">每个控制周期重新预测、重新优化，所以叫滚动优化。</text>
+
+  <path d="M80,405 C180,310 280,270 410,275 C560,280 650,180 800,160 C870,150 920,180 950,230" class="path"/>
+  <text x="795" y="140" class="text" fill="#1976d2">参考轨迹 / 路径</text>
+
+  <circle cx="210" cy="300" r="16" fill="#333"/>
+  <text x="165" y="285" class="text">当前状态 x₀</text>
+
+  <path d="M210,300 C280,255 350,240 420,250 C500,262 560,230 610,205" class="pred"/>
+  <circle cx="275" cy="264" r="8" class="point"/>
+  <circle cx="340" cy="247" r="8" class="point"/>
+  <circle cx="420" cy="250" r="8" class="point"/>
+  <circle cx="520" cy="245" r="8" class="point"/>
+  <circle cx="610" cy="205" r="8" class="point"/>
+  <text x="450" y="305" class="text" fill="#d32f2f">预测时域 N / T</text>
+
+  <path d="M210,300 C232,286 252,275 275,264" class="exec"/>
+  <text x="205" y="355" class="text" fill="#2e7d32">只执行第一小步</text>
+
+  <rect x="80" y="88" width="800" height="90" fill="#f6f8fa" stroke="#333" stroke-width="2" rx="12"/>
+  <text x="110" y="122" class="text">每次优化考虑：离参考轨迹近、控制量别太大、速度/加速度不超限、必要时避障。</text>
+  <text x="110" y="154" class="text">下一周期拿到新的状态后，再重新预测和优化。</text>
+</svg>
