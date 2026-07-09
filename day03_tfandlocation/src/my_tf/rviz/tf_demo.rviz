@@ -1,0 +1,37 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Class: rviz_default_plugins/Grid
+      Name: Grid
+      Value: true
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Frame:
+        All Enabled: true
+      Value: true
+    - Class: rviz_default_plugins/RobotModel
+      Name: RobotModel
+      Description Topic: /robot_description
+      Visual Enabled: true
+      Value: true
+  Enabled: true
+  Global Options:
+    Fixed Frame: odom
+    Frame Rate: 30
+  Name: root
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 2.0
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Target Frame: base_link

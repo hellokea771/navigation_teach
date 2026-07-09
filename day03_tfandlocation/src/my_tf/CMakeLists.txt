@@ -8,6 +8,7 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 
+find_package(rclcpp REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
@@ -16,6 +17,7 @@ add_executable(my_tf2_broadcaster src/my_tf2_broadcaster.cpp)
 ament_target_dependencies(my_tf2_broadcaster
   tf2_ros
   geometry_msgs
+  rclcpp
 )
 install(TARGETS
   my_tf2_broadcaster
@@ -28,6 +30,14 @@ install(DIRECTORY urdf
 
 install(DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}
+)
+
+install(DIRECTORY rviz
+  DESTINATION share/${PROJECT_NAME}
+)
+
+install(PROGRAMS scripts/joint_state_pub.py
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 
