@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+"""
+path_publisher.py
+
+Publishes a reference path on /reference_path (nav_msgs/Path).
+Supports three path types: straight, s_shape, corner.
+"""
+
+import math
+import rclpy
+from rclpy.node import Node
+from nav_msgs.msg import Path
+from geometry_msgs.msg import PoseStamped
+from std_msgs.msg import Header
+
+from common import REFERENCE_PATH_TOPIC, ODOM_FRAME
+
+
+def generate_straight_path(start_x=0.0, start_y=0.0, length=10.0, step=0.1):
+    """Straight line along the x-axis."""
+    poses = []
+    n = int(length / step)
+    for i in range(n + 1):
+        x = start_x + i * step
+        y = start_y
+        poses.append((x, y, 0.0))
+    return poses
+
+
+def generate_s_shape_path(start_x=0.0, start_y=0.0, amplitude=2.0, length=12.0, step=0.05):
+    """S-shaped sinusoidal path."""
+    poses = []
+    n = int(length / step)
+    for i in range(n + 1):
+        x = start_x + i * step
+        y = start_y + amplitude * math.sin(2.0 * math.pi * x / 8.0)
+        poses.append((x, y, 0.0))
+    return poses
+
+
+def generate_simple_corner_path(start_x=0.0, start_y=0.0, step=0.1):
+    """Simple corner: straight, turn left, straight."""
+    poses = []
+    # straight along x
+    for i in range(51):
+        poses.append((start_x + i * step, start_y, 0.0))
+    # arc turn (quarter circle)
+    cx = start_x + 5.0
+    cy = start_y
+    for i in range(16):
+        theta = math.pi / 2 * i / 15
+        x = cx + 2.0 * math.cos(theta)
+        y = cy + 2.0 * math.sin(theta)
+        poses.append((x, y, 0.0))
+    # straight along y
+    for i in range(31):
+        poses.append((start_x + 5.0, start_y + 2.0 + i * step, 0.0))
+    return poses
+
+
+class PathPublisher(Node):
+
+    def __init__(self):
+        super().__init__('path_publisher')
+        self.publisher_ = self.create_publisher(Path, REFERENCE_PATH_TOPIC, 10)
+
+        self.declare_parameter('path_type', 's_shape')
+        self.declare_parameter('publish_rate', 1.0)
+
+        path_type = self.get_parameter('path_type').value
+        rate = self.get_parameter('publish_rate').value
+
+        self.get_logger().info(f'Publishing path type: {path_type} at {rate} Hz')
+
+        if path_type == 'straight':
+            raw = generate_straight_path()
+        elif path_type == 'corner':
+            raw = generate_simple_corner_path()
+        else:
+            raw = generate_s_shape_path()
+
+        self.path = Path()
+        self.path.header = Header(frame_id=ODOM_FRAME)
+        for (x, y, _) in raw:
+            p = PoseStamped()
+            p.header = Header(frame_id=ODOM_FRAME)
+            p.pose.position.x = x
+            p.pose.position.y = y
+            p.pose.orientation.w = 1.0
+            self.path.poses.append(p)
+
+        self.get_logger().info(f'Generated path with {len(self.path.poses)} poses')
+
+        self.timer = self.create_timer(1.0 / rate, self.publish_path)
+
+    def publish_path(self):
+        self.path.header.stamp = self.get_clock().now().to_msg()
+        for pose in self.path.poses:
+            pose.header.stamp = self.path.header.stamp
+        self.publisher_.publish(self.path)
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = PathPublisher()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    node.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!-- Simple URDF car model for Pure Pursuit RViz demo -->
+<robot name="simple_car">
+
+  <!-- ============== base_link ============== -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.4 0.25 0.08"/>
+      </geometry>
+      <material name="chassis">
+        <color rgba="0.2 0.4 0.8 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- ============== body ============== -->
+  <link name="body_link">
+    <visual>
+      <geometry>
+        <box size="0.35 0.2 0.12"/>
+      </geometry>
+      <material name="body">
+        <color rgba="0.15 0.35 0.75 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="base_to_body" type="fixed">
+    <parent link="base_link"/>
+    <child link="body_link"/>
+    <origin xyz="0.0 0.0 0.1"/>
+  </joint>
+
+  <!-- ============== front (direction indicator) ============== -->
+  <link name="front_link">
+    <visual>
+      <geometry>
+        <box size="0.08 0.05 0.03"/>
+      </geometry>
+      <material name="front">
+        <color rgba="1.0 0.2 0.1 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="base_to_front" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_link"/>
+    <origin xyz="0.2 0.0 0.08"/>
+  </joint>
+
+  <!-- ============== left wheel ============== -->
+  <link name="left_wheel_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.06" length="0.04"/>
+      </geometry>
+      <material name="wheel">
+        <color rgba="0.3 0.3 0.3 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="base_to_left_wheel" type="fixed">
+    <parent link="base_link"/>
+    <child link="left_wheel_link"/>
+    <origin xyz="-0.15 0.15 -0.04" rpy="0 1.5708 0"/>
+  </joint>
+
+  <!-- ============== right wheel ============== -->
+  <link name="right_wheel_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.06" length="0.04"/>
+      </geometry>
+      <material name="wheel">
+        <color rgba="0.3 0.3 0.3 1.0"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="base_to_right_wheel" type="fixed">
+    <parent link="base_link"/>
+    <child link="right_wheel_link"/>
+    <origin xyz="-0.15 -0.15 -0.04" rpy="0 1.5708 0"/>
+  </joint>
+
+</robot>
