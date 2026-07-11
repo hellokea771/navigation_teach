@@ -6,43 +6,40 @@ Panels:
 Visualization Manager:
   Class: ""
   Displays:
-    - Alpha: 0.7
+    - Alpha: 0.9
       Class: rviz_default_plugins/RobotModel
       Name: RobotModel
       Robot Description: robot_description
       Visual Enabled: true
       Enabled: true
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Cell Size: 1
+      Color: 160; 160; 160
+      Plane Cell Count: 30
+      Normal Cell Count: 0
+      Reference Frame: <Fixed Frame>
+      Enabled: true
     - Class: rviz_default_plugins/Path
       Name: Reference Path
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /reference_path
+      Topic: /reference_path
       Color: 25; 255; 0
       Position Tolerance: 0.1
       Angle Tolerance: 0.1
-      Head Diamond: false
-      Shaft Radius: 0.03
-      Head Radius: 0.08
-      Head Length: 0.15
+      Shaft Radius: 0.05
+      Head Radius: 0.1
+      Head Length: 0.2
       Enabled: true
     - Class: rviz_default_plugins/Path
       Name: Actual Path
-      Topic:
-        Depth: 5000
-        Durability Policy: Volatile
-        History Policy: Keep All
-        Reliability Policy: Reliable
-        Value: /actual_path
+      Topic: /actual_path
       Color: 255; 128; 0
       Position Tolerance: 0.1
       Angle Tolerance: 0.1
-      Head Diamond: false
-      Shaft Radius: 0.03
-      Head Radius: 0.08
-      Head Length: 0.15
+      Shaft Radius: 0.05
+      Head Radius: 0.1
+      Head Length: 0.2
+      Queue Size: 5000
       Enabled: true
     - Class: rviz_default_plugins/Marker
       Name: Lookahead Point
@@ -58,30 +55,29 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        odom:
-          base_link:
-            body_link: true
-            front_link: true
-            left_wheel_link: true
-            right_wheel_link: true
+        map:
+          odom:
+            base_link:
+              body_link: true
+              front_link: true
+              left_front_wheel_link: true
+              right_front_wheel_link: true
+              left_rear_wheel_link: true
+              right_rear_wheel_link: true
   Global Options:
     Fixed Frame: odom
     Frame Rate: 30
   Name: root
   Tools:
     - Class: rviz_default_plugins/MoveCamera
-  Initial Pose:
-    x: 0.0
-    y: 0.0
-    z: 0.0
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 8
+      Distance: 6
       Focal Point:
-        x: 5.0
-        y: 0.0
+        x: 2.0
+        y: 1.0
         z: 0.0
-      Pitch: 0.5
-      Yan: -0.3
+      Pitch: 0.4
+      Yaw: -0.4
     Saved: ~

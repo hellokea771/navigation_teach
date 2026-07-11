@@ -7,17 +7,7 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 
-install(DIRECTORY launch
-  DESTINATION share/${PROJECT_NAME}
-)
-
-install(DIRECTORY urdf
-  DESTINATION share/${PROJECT_NAME}
-)
-
-install(DIRECTORY rviz
-  DESTINATION share/${PROJECT_NAME}
-)
+install(DIRECTORY launch urdf rviz DESTINATION share/${PROJECT_NAME})
 
 install(PROGRAMS
   scripts/path_publisher

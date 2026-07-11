@@ -1,0 +1,122 @@
+#!/usr/bin/env python3
+"""
+map_publisher.py
+
+Simple map publisher that reads PGM/YAML files and publishes OccupancyGrid.
+Static map - published once with latch for late subscribers.
+"""
+
+import os
+import yaml
+from PIL import Image
+import numpy as np
+
+import rclpy
+from rclpy.node import Node
+from rclpy.qos import QoSProfile, DurabilityPolicy
+from nav_msgs.msg import OccupancyGrid
+from std_msgs.msg import Header
+
+
+class MapPublisher(Node):
+
+    def __init__(self):
+        super().__init__('map_publisher')
+        
+        self.declare_parameter('map_yaml', '')
+        self.declare_parameter('topic_name', 'map')
+        self.declare_parameter('frame_id', 'map')
+        
+        yaml_path = self.get_parameter('map_yaml').value
+        topic_name = self.get_parameter('topic_name').value
+        frame_id = self.get_parameter('frame_id').value
+        
+        if not yaml_path or not os.path.exists(yaml_path):
+            self.get_logger().error(f'Map YAML file not found: {yaml_path}')
+            return
+        
+        # Read YAML
+        with open(yaml_path, 'r') as f:
+            map_config = yaml.safe_load(f)
+        
+        # Resolve image path relative to yaml
+        image_file = map_config['image']
+        if not os.path.isabs(image_file):
+            image_file = os.path.join(os.path.dirname(yaml_path), image_file)
+        
+        self.get_logger().info(f'Loading map from: {image_file}')
+        
+        # Load image
+        img = Image.open(image_file)
+        img_array = np.array(img)
+        
+        # Convert to grayscale if needed
+        if len(img_array.shape) == 3:
+            img_array = np.mean(img_array[:, :, :3], axis=2)
+        
+        resolution = map_config.get('resolution', 0.05)
+        
+        # Create OccupancyGrid
+        self.map_msg = OccupancyGrid()
+        self.map_msg.header = Header(frame_id=frame_id)
+        self.map_msg.info.resolution = resolution
+        self.map_msg.info.width = img_array.shape[1]
+        self.map_msg.info.height = img_array.shape[0]
+        
+        # Set origin
+        origin = map_config.get('origin', [0.0, 0.0, 0.0])
+        self.map_msg.info.origin.position.x = origin[0]
+        self.map_msg.info.origin.position.y = origin[1]
+        self.map_msg.info.origin.orientation.w = 1.0
+        
+        # Convert to OccupancyGrid values
+        occupied_thresh = map_config.get('occupied_thresh', 0.65) * 255
+        free_thresh = map_config.get('free_thresh', 0.196) * 255
+        negate = map_config.get('negate', 0)
+        
+        if negate:
+            img_array = 255 - img_array
+        
+        # Convert to 0-100 scale
+        occ_grid = np.zeros_like(img_array, dtype=np.int8)
+        occ_grid[img_array < free_thresh] = 0  # Free
+        occ_grid[img_array > occupied_thresh] = 100  # Occupied
+        occ_grid[(img_array >= free_thresh) & (img_array <= occupied_thresh)] = -1  # Unknown
+        
+        self.map_msg.data = occ_grid.flatten().tolist()
+        
+        # QoS with transient_local durability (latched)
+        qos = QoSProfile(
+            depth=1,
+            durability=DurabilityPolicy.TRANSIENT_LOCAL,
+        )
+        
+        # Publisher
+        self.publisher_ = self.create_publisher(OccupancyGrid, topic_name, qos)
+        
+        self.get_logger().info(f'Map loaded: {self.map_msg.info.width}x{self.map_msg.info.height}, '
+                              f'resolution: {resolution} m/pixel')
+        self.get_logger().info(f'Publishing static map on: {topic_name}')
+        
+        # Publish once (static map)
+        self.publish_map()
+        
+
+    def publish_map(self):
+        self.map_msg.header.stamp = self.get_clock().now().to_msg()
+        self.publisher_.publish(self.map_msg)
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = MapPublisher()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        pass
+    node.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()
