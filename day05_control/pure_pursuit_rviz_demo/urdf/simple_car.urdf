@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<robot name="simple_pure_pursuit_car">
+  <material name="body_blue">
+    <color rgba="0.1 0.35 0.9 1.0"/>
+  </material>
+  <material name="front_orange">
+    <color rgba="1.0 0.35 0.0 1.0"/>
+  </material>
+  <material name="wheel_dark">
+    <color rgba="0.02 0.02 0.02 1.0"/>
+  </material>
+  <material name="base_gray">
+    <color rgba="0.45 0.45 0.45 1.0"/>
+  </material>
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0.04" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.18 0.18 0.08"/>
+      </geometry>
+      <material name="base_gray"/>
+    </visual>
+  </link>
+
+  <link name="body_link">
+    <visual>
+      <origin xyz="0 0 0.18" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.75 0.42 0.22"/>
+      </geometry>
+      <material name="body_blue"/>
+    </visual>
+  </link>
+
+  <link name="front_link">
+    <visual>
+      <origin xyz="0 0 0.18" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.20 0.46 0.24"/>
+      </geometry>
+      <material name="front_orange"/>
+    </visual>
+  </link>
+
+  <link name="left_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.11" length="0.08"/>
+      </geometry>
+      <material name="wheel_dark"/>
+    </visual>
+  </link>
+
+  <link name="right_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.11" length="0.08"/>
+      </geometry>
+      <material name="wheel_dark"/>
+    </visual>
+  </link>
+
+  <joint name="base_to_body" type="fixed">
+    <parent link="base_link"/>
+    <child link="body_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="body_to_front" type="fixed">
+    <parent link="body_link"/>
+    <child link="front_link"/>
+    <origin xyz="0.42 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_left_wheel" type="fixed">
+    <parent link="base_link"/>
+    <child link="left_wheel_link"/>
+    <origin xyz="0 0.26 0.08" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="base_to_right_wheel" type="fixed">
+    <parent link="base_link"/>
+    <child link="right_wheel_link"/>
+    <origin xyz="0 -0.26 0.08" rpy="0 0 0"/>
+  </joint>
+</robot>

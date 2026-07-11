@@ -1,0 +1,130 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz_default_plugins/Grid
+      Color: 160; 160; 160
+      Enabled: true
+      Line Style:
+        Line Width: 0.03
+        Value: Lines
+      Name: Grid
+      Plane: XY
+      Plane Cell Count: 24
+      Reference Frame: odom
+      Value: true
+    - Class: rviz_default_plugins/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+      Marker Scale: 0.8
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Update Interval: 0
+      Value: true
+    - Class: rviz_default_plugins/RobotModel
+      Description Source: Topic
+      Description Topic:
+        Value: /robot_description
+      Enabled: true
+      Name: RobotModel
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
+    - Class: rviz_default_plugins/Path
+      Alpha: 1
+      Buffer Length: 1
+      Color: 0; 130; 255
+      Enabled: true
+      Line Style: Lines
+      Line Width: 0.08
+      Name: reference_path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0.02
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Topic:
+        Value: /reference_path
+      Value: true
+    - Class: rviz_default_plugins/Path
+      Alpha: 1
+      Buffer Length: 1
+      Color: 0; 210; 90
+      Enabled: true
+      Line Style: Lines
+      Line Width: 0.06
+      Name: actual_path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0.05
+      Pose Color: 255; 255; 0
+      Pose Style: None
+      Topic:
+        Value: /actual_path
+      Value: true
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Marker Topic:
+        Value: /lookahead_point
+      Name: lookahead_point
+      Namespaces:
+        pure_pursuit: true
+      Queue Size: 10
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 35; 35; 35
+    Fixed Frame: odom
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+  Transformation:
+    Current:
+      Class: rviz_default_plugins/TF
+  Value: true
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 15
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.06
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: 6
+        Y: 0
+        Z: 0
+      Name: Current View
+      Near Clip Distance: 0.01
+      Pitch: 1.1
+      Target Frame: odom
+      Yaw: 4.7
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 900
+  Hide Left Dock: false
+  Hide Right Dock: false
+  QMainWindow State: 000000ff00000000fd0000000100000000000001560000035cfc0200000001fb000000100044006900730070006c006100790073010000003d0000035c000000c900ffffff000000010000010f0000035cfc0200000001fb0000000a00560069006500770073000000003d0000035c000000a400ffffff000005560000035c00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Views:
+    collapsed: false
+  Width: 1366
+  X: 40
+  Y: 40
