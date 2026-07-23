@@ -29,7 +29,8 @@ class PathPublisher(Node):
             self._add_pose(cx + r * math.cos(theta), cy + r * math.sin(theta))
 
         self.get_logger().info(f'Path ready: {len(self.path.poses)} poses')
-        self.timer = self.create_timer(0.2, self.publish_path)  # 5Hz
+        self.publish_path()
+        self.timer = self.create_timer(1.0, self.publish_path)  # 1Hz
 
     def _add_pose(self, x, y):
         p = PoseStamped()

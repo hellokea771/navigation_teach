@@ -14,37 +14,33 @@ Visualization Manager:
       Enabled: true
     - Class: rviz_default_plugins/Grid
       Name: Grid
-      Cell Size: 1
-      Color: 160; 160; 160
+      Reference Frame: <Fixed Frame>
       Plane Cell Count: 30
       Normal Cell Count: 0
-      Reference Frame: <Fixed Frame>
+      Color: 160; 160; 160
       Enabled: true
     - Class: rviz_default_plugins/Path
       Name: Reference Path
       Topic: /reference_path
       Color: 25; 255; 0
-      Position Tolerance: 0.1
-      Angle Tolerance: 0.1
-      Shaft Radius: 0.05
-      Head Radius: 0.1
-      Head Length: 0.2
+      Alpha: 1.0
+      Buffer Length: 1
+      Line Style: Lines
+      Line Width: 0.04
       Enabled: true
     - Class: rviz_default_plugins/Path
       Name: Actual Path
       Topic: /actual_path
       Color: 255; 128; 0
-      Position Tolerance: 0.1
-      Angle Tolerance: 0.1
-      Shaft Radius: 0.05
-      Head Radius: 0.1
-      Head Length: 0.2
-      Queue Size: 5000
+      Alpha: 1.0
+      Buffer Length: 1
+      Line Style: Lines
+      Line Width: 0.03
       Enabled: true
     - Class: rviz_default_plugins/Marker
       Name: Lookahead Point
       Marker Topic: /lookahead_point
-      Queue Size: 10
+      Queue Size: 1
       Enabled: true
     - Class: rviz_default_plugins/TF
       Name: TF

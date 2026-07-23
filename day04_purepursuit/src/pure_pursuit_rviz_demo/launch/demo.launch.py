@@ -21,8 +21,7 @@ def generate_launch_description():
         robot_desc = f.read()
 
     # Write robot_description to a YAML file for rviz2
-    # /** means global scope - all nodes can see it
-    params_yaml_path = os.path.join(package_dir, 'rviz', 'robot_params.yaml')
+    params_yaml_path = os.path.join('/tmp', 'pure_pursuit_robot_params.yaml')
     with open(params_yaml_path, 'w') as f:
         yaml.dump({'/**': {'ros__parameters': {'robot_description': robot_desc}}}, f)
 
@@ -58,7 +57,7 @@ def generate_launch_description():
         executable='path_publisher',
     )
 
-    # Virtual Robot
+    # Virtual Robot (with watchdog timeout 0.5s)
     virtual_robot = Node(
         package='pure_pursuit_rviz_demo',
         executable='virtual_robot',

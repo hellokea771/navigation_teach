@@ -5,6 +5,8 @@ virtual_robot.py
 Simulates a differential-drive robot chassis.
 Subscribes to /cmd_vel, integrates motion using a simple model,
 and publishes /odom, TF (odom -> base_link), and /actual_path.
+
+Includes a watchdog: if no cmd_vel received for 0.5s, robot stops.
 """
 
 import math
@@ -21,6 +23,12 @@ from common import (
     quaternion_from_yaw,
 )
 
+# 看门狗超时时间（秒）：如果超过此时间未收到cmd_vel，机器人停止
+CMD_VEL_TIMEOUT = 2.0
+
+# 最大actual_path位姿数（约1.5圈轨迹）
+MAX_PATH_POSES = 300
+
 
 class VirtualRobot(Node):
 
@@ -35,6 +43,7 @@ class VirtualRobot(Node):
         self.omega = 0.0
 
         self.last_time = self.get_clock().now()
+        self.last_cmd_time = self.get_clock().now()  # 最后一次收到cmd_vel的时间
 
         self.odom_pub = self.create_publisher(Odometry, ODOM_TOPIC, 10)
         self.path_pub = self.create_publisher(Path, ACTUAL_PATH_TOPIC, 10)
@@ -54,11 +63,22 @@ class VirtualRobot(Node):
     def cmd_vel_callback(self, msg: Twist):
         self.v = msg.linear.x
         self.omega = msg.angular.z
+        self.last_cmd_time = self.get_clock().now()  # 更新看门狗时间戳
 
     def update(self):
         now = self.get_clock().now()
         dt = (now - self.last_time).nanoseconds / 1e9
         self.last_time = now
+
+        # 看门狗：如果长时间没收到cmd_vel，停止机器人
+        elapsed_since_cmd = (now - self.last_cmd_time).nanoseconds / 1e9
+        if elapsed_since_cmd > CMD_VEL_TIMEOUT:
+            if self.v != 0.0 or self.omega != 0.0:
+                self.v = 0.0
+                self.omega = 0.0
+                self.get_logger().warn(
+                    f'Cmd vel timeout ({elapsed_since_cmd:.1f}s > {CMD_VEL_TIMEOUT}s), stopping robot'
+                )
 
         if dt > 0.1:
             dt = 0.02
@@ -101,8 +121,8 @@ class VirtualRobot(Node):
             pose.pose.position.y = self.y
             pose.pose.orientation = q
             self.actual_path.poses.append(pose)
-            if len(self.actual_path.poses) > 5000:
-                self.actual_path.poses = self.actual_path.poses[-1000:]
+            if len(self.actual_path.poses) > MAX_PATH_POSES:
+                self.actual_path.poses.pop(0)
             self.actual_path.header.stamp = now.to_msg()
             self.path_pub.publish(self.actual_path)
 
